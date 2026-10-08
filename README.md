@@ -11,6 +11,6 @@ Everything you'd normally change is in the `EDIT THE PAGE HERE` block near the b
 | `FEATURED` | The two big tiles: Become Acti AR filter and the quiz. |
 | `REELS` | Reel previews (`reels/*.mp4`). Put each reel's Instagram link in `url`. |
 | `SOCIAL` | Instagram, TikTok, LinkedIn. |
-| `WHATSAPP_STICKERS_URL` | Link to the published sticker packs (e.g. Sticker.ly). Empty = "coming soon"; stickers can still be saved one by one. |
+| `WHATSAPP_PACKS` | Sticker.ly link for each sticker pack. The green "Add to WhatsApp" button follows the open tab. |
 
 Files: `img/` Acti poses for the tiles, `reels/` reel videos and posters, `stickers/` the WhatsApp stickers (from `acti-stickers`), `activatemefest-2027.ics` the calendar event.
