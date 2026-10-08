@@ -385,9 +385,12 @@
       { icon: "linkedin", bg: "bg-li", title: "LinkedIn", note: "ActivateMe Fest", url: "https://www.linkedin.com/company/activateme-fest/" },
     ];
 
-    // Stickers. Once the packs are published (e.g. on Sticker.ly), paste the link here
-    // and the green "Add to WhatsApp" button turns on.
-    const WHATSAPP_STICKERS_URL = "";
+    // Sticker.ly links for each pack. The green "Add to WhatsApp" button opens the pack
+    // for whichever tab is showing. Leave a link empty to show "coming soon".
+    const WHATSAPP_PACKS = {
+      acti: { name: "Acti", url: "https://sticker.ly/s/UFHB5K" },
+      sports: { name: "Acti Sports", url: "https://sticker.ly/s/AF9T27" },
+    };
     const STICKERS = {
       acti: ["01_lol", "02_hmm", "03_hi", "04_on_my_way", "05_mabrook", "06_lets_go", "07_love_you", "08_good_morning", "09_shukran",
              "10_omg", "11_nooo", "12_habibi", "13_activated", "14_yalla", "15_bye", "16_psst", "17_see_you_there", "18_activateme"],
@@ -477,25 +480,26 @@
       + `&details=${enc("Family festival with 100+ activities. Try the Become Acti filter: https://becomeacti.pages.dev")}`;
 
     // Stickers
+    const wa = $("wa-add");
     function showPack(pack) {
       document.querySelectorAll(".segmented button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.pack === pack));
       $("sticker-grid").innerHTML = STICKERS[pack].map((n) => {
         const src = `stickers/${pack}/${n}.webp`;
         return `<a href="${src}" download="acti-${n.replace(/^\d+_/, "")}.webp"><img src="${src}" alt="${esc(n.replace(/^\d+_/, "").replace(/_/g, " "))}" loading="lazy"></a>`;
       }).join("");
+      const wp = WHATSAPP_PACKS[pack];
+      wa.classList.toggle("off", !wp.url);
+      if (wp.url) {
+        wa.href = wp.url;
+        wa.innerHTML = `${ICONS.whatsapp} Add ${esc(wp.name)} to WhatsApp`;
+      } else {
+        wa.removeAttribute("href");
+        wa.textContent = "WhatsApp pack coming soon";
+      }
     }
     document.querySelectorAll(".segmented button").forEach((b) => b.addEventListener("click", () => showPack(b.dataset.pack)));
     showPack("acti");
-    const wa = $("wa-add");
-    if (WHATSAPP_STICKERS_URL) {
-      wa.href = WHATSAPP_STICKERS_URL;
-      wa.innerHTML = `${ICONS.whatsapp} Add to WhatsApp`;
-      $("stickers-hint").textContent = "Tap below to add both packs to WhatsApp.";
-    } else {
-      wa.classList.add("off");
-      wa.textContent = "WhatsApp pack coming soon";
-      $("stickers-hint").textContent = "Tap a sticker to save it, then send it in any chat.";
-    }
+    $("stickers-hint").textContent = "Add a whole pack to WhatsApp, or tap a sticker to save it.";
 
     // Countdown
     const START = new Date(EVENT.start);
