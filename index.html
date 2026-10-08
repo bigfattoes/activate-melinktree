@@ -3,208 +3,508 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#4a01e0">
+  <meta name="theme-color" content="#0c0717">
   <title>ActivateMe™ Fest · Links</title>
   <meta name="description" content="Everything ActivateMe™ Fest in one place. 16–17 Jan 2027, Dubai Silicon Oasis.">
   <meta property="og:title" content="ActivateMe™ Fest · 16–17 Jan 2027">
-  <meta property="og:description" content="Try the Become Acti filter, get tickets, the app and more.">
+  <meta property="og:description" content="Try the Become Acti filter, take the quiz, grab the stickers and find us.">
   <meta property="og:image" content="og.jpg">
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <!-- iPhones and Macs use SF Pro (the system font). Inter is the closest match for everyone else. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --purple: #4a01e0;
+      --bg: #0c0717;
+      --card: rgba(255, 255, 255, .07);
+      --card-hi: rgba(255, 255, 255, .12);
+      --hairline: rgba(255, 255, 255, .1);
+      --text: #fff;
+      --text-2: rgba(235, 235, 245, .62);
+      --text-3: rgba(235, 235, 245, .38);
+      --purple: #6b2cff;
       --pink: #f83840;
       --orange: #fc8700;
-      --ink: #1b0b46;
-      --brand: linear-gradient(120deg, #4a01e0 0%, #b01ab8 45%, #f83840 70%, #fc8700 100%);
+      --radius: 22px;
+      --ease: cubic-bezier(.2, .8, .2, 1);
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    html { background: #2b0a83; }
+    html { background: var(--bg); color-scheme: dark; }
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: "Baloo 2", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", Inter, system-ui, "Segoe UI", Roboto, sans-serif;
+      font-size: 17px;
+      letter-spacing: -.01em;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    /* Soft brand glow behind everything */
+    body::before {
+      content: ""; position: fixed; inset: -20vh -20vw auto; height: 90vh; z-index: -1;
       background:
-        radial-gradient(circle at 15% 85%, rgba(252, 106, 32, .55), transparent 45%),
-        radial-gradient(circle at 90% 5%, rgba(194, 26, 224, .6), transparent 45%),
-        linear-gradient(170deg, #3a06c9 0%, #4a10d8 50%, #2b0a83 100%);
-      background-attachment: fixed;
+        radial-gradient(40% 50% at 25% 40%, rgba(107, 44, 255, .55), transparent 70%),
+        radial-gradient(35% 45% at 80% 30%, rgba(248, 56, 64, .32), transparent 70%),
+        radial-gradient(30% 40% at 60% 75%, rgba(252, 135, 0, .22), transparent 70%);
+      filter: blur(40px);
     }
     main {
-      max-width: 480px;
+      max-width: 460px;
       margin: 0 auto;
-      padding: calc(env(safe-area-inset-top) + 28px) 16px calc(env(safe-area-inset-bottom) + 32px);
-      text-align: center;
+      padding: calc(env(safe-area-inset-top) + 40px) 16px calc(env(safe-area-inset-bottom) + 40px);
     }
 
-    .hero { position: relative; display: grid; justify-items: center; }
-    .acti {
-      width: 150px; height: auto;
-      filter: drop-shadow(0 14px 22px rgba(10, 0, 40, .45));
-      animation: bob 3s ease-in-out infinite;
+    /* ---------- Header ---------- */
+    .hero { text-align: center; }
+    .app-icon {
+      width: 84px; height: 84px; margin: 0 auto 16px;
+      display: grid; place-items: center;
+      border-radius: 22.5%;
+      background: #fff;
+      box-shadow: 0 12px 32px rgba(107, 44, 255, .45), inset 0 0 0 .5px rgba(0, 0, 0, .08);
     }
-    .logo {
-      position: absolute; top: 6px; left: calc(50% - 128px);
-      width: 64px; height: 64px; padding: 10px;
-      border-radius: 50%; background: #fff;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
-    }
-    h1 { margin: 6px 0 0; font-size: 34px; line-height: 1; font-weight: 800; }
-    .when { margin: 6px 0 0; font-size: 16px; font-weight: 700; opacity: .92; }
+    .app-icon img { width: 60%; height: auto; }
+    h1 { margin: 0; font-size: 30px; font-weight: 700; letter-spacing: -.025em; line-height: 1.1; }
+    .sub { margin: 6px 0 0; font-size: 15px; color: var(--text-2); }
 
     .countdown {
-      display: inline-flex; gap: 8px; margin: 16px 0 6px;
+      display: inline-flex; align-items: baseline; gap: 2px;
+      margin-top: 18px; padding: 8px 16px;
+      border-radius: 99px;
+      background: var(--card);
+      border: .5px solid var(--hairline);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      font-variant-numeric: tabular-nums;
     }
-    .countdown div {
-      min-width: 68px; padding: 8px 6px 4px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, .12);
-      border: 1.5px solid rgba(255, 255, 255, .25);
-    }
-    .countdown b { display: block; font-size: 28px; line-height: 1; }
-    .countdown span { font-size: 12px; font-weight: 700; letter-spacing: .08em; opacity: .85; }
+    .countdown b { font-size: 17px; font-weight: 600; }
+    .countdown span { font-size: 13px; color: var(--text-2); margin-right: 10px; }
+    .countdown span:last-child { margin-right: 0; }
 
-    .links { display: grid; gap: 12px; margin-top: 18px; }
-    .btn {
-      display: flex; align-items: center; gap: 12px;
-      min-height: 60px; padding: 10px 18px 8px;
-      border-radius: 20px;
-      background: #fff; color: var(--ink);
-      text-decoration: none; text-align: left;
-      font-size: 18px; font-weight: 800; line-height: 1.15;
-      box-shadow: 0 8px 0 rgba(27, 11, 70, .25);
-      transition: transform .12s ease, box-shadow .12s ease;
+    /* ---------- Section titles ---------- */
+    .section-title {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin: 34px 4px 10px;
+      font-size: 22px; font-weight: 700; letter-spacing: -.02em;
     }
-    .btn:active { transform: translateY(4px); box-shadow: 0 4px 0 rgba(27, 11, 70, .25); }
-    .btn .ico { flex: none; width: 36px; font-size: 26px; text-align: center; }
-    .btn .txt { flex: 1; }
-    .btn small { display: block; font-size: 13px; font-weight: 700; color: #6b5fa8; }
-    .btn .arrow { flex: none; font-size: 22px; color: var(--purple); }
+    .section-title a { font-size: 15px; font-weight: 500; color: #a98bff; text-decoration: none; letter-spacing: 0; }
 
-    .btn.featured {
-      background: var(--brand); color: #fff;
-      border: 2px solid rgba(255, 255, 255, .6);
-      min-height: 84px; font-size: 22px;
+    /* ---------- Feature tiles (AR filter + quiz) ---------- */
+    .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 30px; }
+    .tile {
+      position: relative; overflow: hidden;
+      aspect-ratio: 1 / 1.12;
+      padding: 16px;
+      border-radius: var(--radius);
+      color: #fff; text-decoration: none;
+      display: flex; flex-direction: column;
+      box-shadow: 0 18px 40px -18px rgba(0, 0, 0, .7), inset 0 0 0 .5px rgba(255, 255, 255, .25);
+      transition: transform .35s var(--ease);
     }
-    .btn.featured small { color: rgba(255, 255, 255, .9); }
-    .btn.featured .arrow { color: #fff; }
-    .btn.featured .tag {
-      display: inline-block; margin-left: 6px; padding: 1px 8px 0;
-      border-radius: 99px; background: #fff; color: var(--pink);
-      font-size: 12px; vertical-align: 3px;
+    .tile:active { transform: scale(.97); }
+    .tile.ar { background: linear-gradient(155deg, #7b3cff 0%, #4a01e0 55%, #2a0a8f 100%); }
+    .tile.quiz { background: linear-gradient(155deg, #ff9f2e 0%, #f83840 60%, #b0157a 100%); }
+    .tile::after { /* glossy top sheen */
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .18), transparent 40%);
+      pointer-events: none;
     }
-    .btn.soon { opacity: .6; pointer-events: none; box-shadow: none; }
-
-    .apps { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .apps .btn { min-height: 60px; font-size: 17px; padding: 10px 14px 8px; }
-
-    .reel {
-      margin-top: 22px; padding: 12px;
-      border-radius: 24px;
-      background: rgba(255, 255, 255, .1);
-      border: 1.5px solid rgba(255, 255, 255, .2);
+    .tile .chip {
+      align-self: flex-start;
+      padding: 3px 8px; border-radius: 99px;
+      background: rgba(255, 255, 255, .22);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
     }
-    .reel h2 { margin: 2px 0 10px; font-size: 18px; }
-    .reel video {
-      display: block; width: 100%; max-width: 260px; margin: 0 auto;
-      aspect-ratio: 9 / 16; border-radius: 16px; background: #000;
+    .tile h3 { position: relative; z-index: 1; margin: 10px 0 0; font-size: 20px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
+    .tile p { position: relative; z-index: 1; margin: 4px 0 0; font-size: 13px; color: rgba(255, 255, 255, .8); max-width: 60%; }
+    .tile img {
+      position: absolute; right: -6px; bottom: -10px;
+      height: 64%; width: auto;
+      filter: drop-shadow(0 10px 18px rgba(0, 0, 0, .35));
+      transition: transform .5s var(--ease);
     }
-
-    .social { display: flex; justify-content: center; gap: 14px; margin-top: 24px; }
-    .social a {
-      width: 52px; height: 52px; border-radius: 50%;
+    .tile.quiz img { right: 2px; }
+    .tile:hover img { transform: translateY(-4px) rotate(-2deg); }
+    .tile .go {
+      position: absolute; left: 16px; bottom: 16px; z-index: 1;
+      width: 32px; height: 32px; border-radius: 50%;
       display: grid; place-items: center;
-      background: rgba(255, 255, 255, .14);
-      border: 1.5px solid rgba(255, 255, 255, .3);
-      color: #fff;
+      background: #fff; color: #1b0b46;
     }
-    .social svg { width: 24px; height: 24px; }
-    footer { margin-top: 22px; font-size: 13px; opacity: .7; }
+    .tile .go svg { width: 14px; height: 14px; }
 
-    @keyframes bob { 50% { transform: translateY(-6px) rotate(-1.5deg); } }
-    @media (prefers-reduced-motion: reduce) { .acti { animation: none; } }
+    /* ---------- Reels ---------- */
+    .reels {
+      display: flex; gap: 10px;
+      margin: 0 -16px; padding: 0 16px 4px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+    .reels::-webkit-scrollbar { display: none; }
+    .reel {
+      position: relative; flex: none;
+      width: 42%; max-width: 180px; aspect-ratio: 9 / 16;
+      border-radius: 18px; overflow: hidden;
+      scroll-snap-align: start; scroll-margin-left: 16px;
+      background: #1a1030;
+      box-shadow: inset 0 0 0 .5px var(--hairline);
+      transition: transform .35s var(--ease);
+    }
+    .reel:active { transform: scale(.97); }
+    .reel video, .reel img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .reel .badge {
+      position: absolute; right: 10px; bottom: 10px;
+      width: 28px; height: 28px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: rgba(0, 0, 0, .35);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+    .reel .badge svg { width: 14px; height: 14px; }
+    .reel.more {
+      display: grid; place-items: center; text-align: center; padding: 16px;
+      background: linear-gradient(160deg, #2a1660, #120a26);
+      color: #fff; text-decoration: none;
+    }
+    .reel.more .ig { width: 52px; height: 52px; margin: 0 auto 10px; border-radius: 16px; }
+    .reel.more b { display: block; font-size: 15px; }
+    .reel.more span { font-size: 13px; color: var(--text-2); }
+
+    /* ---------- Inset grouped list (iOS Settings style) ---------- */
+    .group {
+      border-radius: var(--radius); overflow: hidden;
+      background: var(--card);
+      border: .5px solid var(--hairline);
+      backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%);
+    }
+    .row {
+      display: flex; align-items: center; gap: 14px;
+      width: 100%; min-height: 60px; padding: 10px 16px;
+      border: 0; background: none; font: inherit; color: inherit; text-align: left;
+      text-decoration: none; cursor: pointer;
+      position: relative;
+      transition: background .2s;
+    }
+    .row:active { background: var(--card-hi); }
+    .row + .row::before {
+      content: ""; position: absolute; top: 0; right: 0; left: 64px;
+      border-top: .5px solid var(--hairline);
+    }
+    .row .ico {
+      flex: none; width: 34px; height: 34px; border-radius: 9px;
+      display: grid; place-items: center; color: #fff;
+    }
+    .row .ico svg { width: 19px; height: 19px; }
+    .row .txt { flex: 1; min-width: 0; }
+    .row .txt b { display: block; font-size: 17px; font-weight: 500; }
+    .row .txt small { display: block; margin-top: 1px; font-size: 14px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .row .chev { flex: none; width: 8px; height: 13px; color: var(--text-3); }
+    .row.soon { opacity: .5; pointer-events: none; }
+
+    .bg-maps { background: linear-gradient(180deg, #34c759, #1f9e45); }
+    .bg-cal { background: linear-gradient(180deg, #ff5a5f, #e5212c); }
+    .bg-wa { background: linear-gradient(180deg, #3ee07a, #1fae55); }
+    .bg-ig { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285aeb 95%); }
+    .bg-tt { background: #000; box-shadow: inset 0 0 0 .5px rgba(255, 255, 255, .2); }
+    .bg-li { background: #0a66c2; }
+
+    footer { margin-top: 36px; text-align: center; font-size: 13px; color: var(--text-3); }
+
+    /* ---------- Bottom sheets ---------- */
+    dialog.sheet {
+      width: 100%; max-width: 460px; max-height: 88vh;
+      margin: auto auto 0; padding: 8px 16px calc(env(safe-area-inset-bottom) + 16px);
+      border: 0; border-radius: 28px 28px 0 0;
+      background: rgba(30, 24, 44, .92);
+      backdrop-filter: blur(30px) saturate(180%); -webkit-backdrop-filter: blur(30px) saturate(180%);
+      color: var(--text);
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, .4);
+    }
+    dialog.sheet[open] { animation: up .45s var(--ease); }
+    dialog.sheet::backdrop { background: rgba(0, 0, 0, .45); animation: fade .3s; }
+    @keyframes up { from { transform: translateY(100%); } }
+    @keyframes fade { from { opacity: 0; } }
+    .grabber { width: 36px; height: 5px; margin: 0 auto 14px; border-radius: 99px; background: rgba(255, 255, 255, .25); }
+    .sheet h2 { margin: 0 4px 4px; font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
+    .sheet .hint { margin: 0 4px 14px; font-size: 14px; color: var(--text-2); }
+    .sheet .group { background: rgba(255, 255, 255, .06); }
+    .sheet .row { min-height: 54px; }
+    .sheet .cancel {
+      display: block; width: 100%; margin-top: 10px; padding: 15px;
+      border: 0; border-radius: 16px;
+      background: rgba(255, 255, 255, .1); color: #fff;
+      font: inherit; font-weight: 600;
+    }
+
+    .segmented {
+      display: grid; grid-template-columns: 1fr 1fr; padding: 2px; margin-bottom: 14px;
+      border-radius: 10px; background: rgba(255, 255, 255, .1);
+    }
+    .segmented button {
+      padding: 7px; border: 0; border-radius: 8px;
+      background: none; color: #fff; font: inherit; font-size: 14px; font-weight: 600;
+    }
+    .segmented button[aria-pressed="true"] { background: rgba(255, 255, 255, .22); box-shadow: 0 3px 8px rgba(0, 0, 0, .2); }
+    .sticker-grid {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px;
+      max-height: 46vh; overflow-y: auto;
+    }
+    .sticker-grid a { display: block; aspect-ratio: 1; border-radius: 14px; padding: 4px; background: rgba(255, 255, 255, .04); }
+    .sticker-grid a:active { background: rgba(255, 255, 255, .12); }
+    .sticker-grid img { width: 100%; height: 100%; object-fit: contain; }
+    .primary {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; margin-top: 14px; padding: 15px;
+      border-radius: 16px; border: 0;
+      background: #25d366; color: #04210f;
+      font: inherit; font-weight: 700; text-decoration: none;
+    }
+    .primary.off { background: rgba(255, 255, 255, .1); color: var(--text-2); pointer-events: none; font-weight: 600; }
+
+    @media (hover: hover) { .row:hover { background: rgba(255, 255, 255, .05); } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
   </style>
 </head>
 <body>
   <main>
     <header class="hero">
-      <img class="logo" src="logo.webp" alt="ActivateMe Fest logo">
-      <img class="acti" src="acti.webp" alt="Acti, the ActivateMe Fest mascot, waving" width="150" height="249">
+      <div class="app-icon"><img src="logo.webp" alt="ActivateMe Fest"></div>
       <h1>ActivateMe™ Fest</h1>
-      <p class="when">16–17 Jan 2027 · Dubai Silicon Oasis</p>
-      <div class="countdown" id="countdown" aria-label="Countdown to the festival">
-        <div><b id="cd-d">--</b><span>DAYS</span></div>
-        <div><b id="cd-h">--</b><span>HRS</span></div>
-        <div><b id="cd-m">--</b><span>MINS</span></div>
+      <p class="sub" id="sub"></p>
+      <div class="countdown" aria-label="Countdown to the festival">
+        <b id="cd-d">--</b><span>days</span>
+        <b id="cd-h">--</b><span>hrs</span>
+        <b id="cd-m">--</b><span>min</span>
       </div>
     </header>
 
-    <nav class="links" id="links"></nav>
+    <div class="tiles" id="tiles"></div>
 
-    <section class="reel">
-      <h2>Become Acti in 15 seconds</h2>
-      <video src="reel.mp4" poster="reel-poster.jpg" muted autoplay loop playsinline controls preload="metadata"></video>
-    </section>
+    <div class="section-title"><span>Reels</span><a id="reels-all" href="#">See all</a></div>
+    <div class="reels" id="reels"></div>
 
-    <div class="social">
-      <a href="https://www.instagram.com/activatemefest/" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-      </a>
-      <a href="https://www.activatemefest.com/" aria-label="Website">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg>
-      </a>
+    <div class="section-title"><span>Plan your visit</span></div>
+    <div class="group">
+      <button class="row" data-sheet="maps-sheet">
+        <span class="ico bg-maps" data-icon="pin"></span>
+        <span class="txt"><b>Find us</b><small id="venue-line"></small></span>
+        <span data-icon="chev"></span>
+      </button>
+      <button class="row" data-sheet="cal-sheet">
+        <span class="ico bg-cal" data-icon="cal"></span>
+        <span class="txt"><b>Add to calendar</b><small id="date-line"></small></span>
+        <span data-icon="chev"></span>
+      </button>
+      <button class="row" data-sheet="stickers-sheet">
+        <span class="ico bg-wa" data-icon="smile"></span>
+        <span class="txt"><b>Acti stickers</b><small>31 free stickers for WhatsApp</small></span>
+        <span data-icon="chev"></span>
+      </button>
     </div>
+
+    <div class="section-title"><span>Follow us</span></div>
+    <div class="group" id="social"></div>
+
     <footer>© ActivateMe™ Fest · MWAN Events</footer>
   </main>
 
+  <!-- Maps action sheet -->
+  <dialog class="sheet" id="maps-sheet">
+    <div class="grabber"></div>
+    <h2 id="maps-title"></h2>
+    <p class="hint" id="maps-hint"></p>
+    <div class="group">
+      <a class="row" id="apple-maps" target="_blank" rel="noopener"><span class="ico bg-maps" data-icon="pin"></span><span class="txt"><b>Apple Maps</b></span><span data-icon="chev"></span></a>
+      <a class="row" id="google-maps" target="_blank" rel="noopener"><span class="ico" style="background:#fff;color:#1a73e8" data-icon="pin"></span><span class="txt"><b>Google Maps</b></span><span data-icon="chev"></span></a>
+    </div>
+    <form method="dialog"><button class="cancel">Cancel</button></form>
+  </dialog>
+
+  <!-- Calendar action sheet -->
+  <dialog class="sheet" id="cal-sheet">
+    <div class="grabber"></div>
+    <h2>Save the date</h2>
+    <p class="hint" id="cal-hint"></p>
+    <div class="group">
+      <a class="row" id="ics-link" href="activatemefest-2027.ics" download><span class="ico bg-cal" data-icon="cal"></span><span class="txt"><b>Apple Calendar</b><small>Also Outlook and others</small></span><span data-icon="chev"></span></a>
+      <a class="row" id="gcal-link" target="_blank" rel="noopener"><span class="ico" style="background:#fff;color:#1a73e8" data-icon="cal"></span><span class="txt"><b>Google Calendar</b></span><span data-icon="chev"></span></a>
+    </div>
+    <form method="dialog"><button class="cancel">Cancel</button></form>
+  </dialog>
+
+  <!-- Stickers sheet -->
+  <dialog class="sheet" id="stickers-sheet">
+    <div class="grabber"></div>
+    <h2>Acti stickers</h2>
+    <p class="hint" id="stickers-hint"></p>
+    <div class="segmented" role="group">
+      <button type="button" data-pack="acti" aria-pressed="true">Acti</button>
+      <button type="button" data-pack="sports" aria-pressed="false">Acti Sports</button>
+    </div>
+    <div class="sticker-grid" id="sticker-grid"></div>
+    <a class="primary" id="wa-add" target="_blank" rel="noopener"></a>
+    <form method="dialog"><button class="cancel">Done</button></form>
+  </dialog>
+
   <script>
-    // ===== EDIT THE LINKS HERE =====
-    // Leave url empty ("") to show the button as "Coming soon".
-    const LINKS = [
-      { featured: true, icon: "🧢", title: "Become Acti", note: "Try our free AR filter", tag: "NEW", url: "https://becomeacti.pages.dev/" },
-      { icon: "🎟️", title: "Get tickets", note: "16–17 Jan 2027", url: "" },
-      { apps: true, ios: "", android: "" },
-      { icon: "💬", title: "Acti WhatsApp stickers", note: "Free sticker packs", url: "" },
-      { icon: "📅", title: "Add to my calendar", note: "Never miss it", url: "activatemefest-2027.ics" },
-      { icon: "📍", title: "How to get there", note: "Dubai Silicon Oasis", url: "https://maps.google.com/?q=Dubai+Silicon+Oasis" },
-      { icon: "🌐", title: "Visit our website", note: "activatemefest.com", url: "https://www.activatemefest.com/" },
-    ];
-    const EVENT_START = new Date("2027-01-16T10:00:00+04:00"); // Dubai time
-    // ================================
-
-    const nav = document.getElementById("links");
-    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-    const button = (l, extra = "") => {
-      const soon = !l.url;
-      const note = soon ? "Coming soon" : l.note || "";
-      const tag = l.tag ? `<span class="tag">${esc(l.tag)}</span>` : "";
-      return `<a class="btn ${l.featured ? "featured" : ""} ${soon ? "soon" : ""} ${extra}" href="${esc(l.url || "#")}"${soon ? ' aria-disabled="true"' : ""}>
-        ${l.icon ? `<span class="ico" aria-hidden="true">${l.icon}</span>` : ""}
-        <span class="txt">${esc(l.title)}${tag}<small>${esc(note)}</small></span>
-        <span class="arrow" aria-hidden="true">›</span></a>`;
+    // ===================== EDIT THE PAGE HERE =====================
+    const EVENT = {
+      dates: "16–17 Jan 2027",
+      start: "2027-01-16T10:00:00+04:00", // Dubai time, for the countdown
+      calStart: "20270116", calEnd: "20270118", // all-day, end is the day after
+      venue: "Dubai Silicon Oasis",
+      // Exact venue: paste a Google Maps pin link here (Share → Copy link).
+      // Until then the map searches for `venue` above.
+      mapsUrl: "",
+      // Optional exact coordinates, used for Apple Maps, e.g. "25.1185,55.3800"
+      coords: "",
     };
-    nav.innerHTML = LINKS.map((l) => {
-      if (!l.apps) return button(l);
-      return `<div class="apps">
-        ${button({ title: "App Store", note: "iPhone", url: l.ios })}
-        ${button({ title: "Google Play", note: "Android", url: l.android })}
-      </div>`;
-    }).join("");
 
+    // The two big tiles at the top
+    const FEATURED = [
+      { cls: "ar", chip: "AR filter", title: "Become Acti", note: "Try on Acti's cap", img: "img/vr.webp", url: "https://becomeacti.pages.dev/" },
+      { cls: "quiz", chip: "Quiz", title: "What should my kid try?", note: "6 quick questions", img: "img/think.webp", url: "https://activateme-quiz.pages.dev/" },
+    ];
+
+    // Reels: short muted previews that open on Instagram.
+    // Put each reel's Instagram link in `url` (open the reel → Share → Copy link).
+    const INSTAGRAM = "https://www.instagram.com/activatemefest/";
+    const REELS = [
+      { title: "Become Acti in 15 seconds", video: "reels/become-acti.mp4", poster: "reels/become-acti.jpg", url: "" },
+      { title: "Put on Acti's cap", video: "reels/launch.mp4", poster: "reels/launch.jpg", url: "" },
+    ];
+
+    const SOCIAL = [
+      { icon: "instagram", bg: "bg-ig", title: "Instagram", note: "@activatemefest", url: INSTAGRAM },
+      { icon: "tiktok", bg: "bg-tt", title: "TikTok", note: "@activatemefest", url: "https://www.tiktok.com/@activatemefest" },
+      { icon: "linkedin", bg: "bg-li", title: "LinkedIn", note: "ActivateMe Fest", url: "https://www.linkedin.com/company/activateme-fest/" },
+    ];
+
+    // Stickers. Once the packs are published (e.g. on Sticker.ly), paste the link here
+    // and the green "Add to WhatsApp" button turns on.
+    const WHATSAPP_STICKERS_URL = "";
+    const STICKERS = {
+      acti: ["01_lol", "02_hmm", "03_hi", "04_on_my_way", "05_mabrook", "06_lets_go", "07_love_you", "08_good_morning", "09_shukran",
+             "10_omg", "11_nooo", "12_habibi", "13_activated", "14_yalla", "15_bye", "16_psst", "17_see_you_there", "18_activateme"],
+      sports: ["01_goal", "02_swish", "03_howzat", "04_ace", "05_splash", "06_flip", "07_knockout", "08_wheee", "09_ride_on",
+               "10_game_on", "11_checkmate", "12_get_creative", "13_activateme"],
+    };
+    // ==============================================================
+
+    const ICONS = {
+      chev: '<svg class="chev" viewBox="0 0 8 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m1.5 1.5 5 5-5 5"/></svg>',
+      arrow: '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 11 3M5 3h6v6"/></svg>',
+      pin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z"/></svg>',
+      cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',
+      smile: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c.9 1.3 2.1 2 3.5 2s2.6-.7 3.5-2"/><circle cx="9" cy="10" r=".6" fill="currentColor"/><circle cx="15" cy="10" r=".6" fill="currentColor"/></svg>',
+      instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>',
+      tiktok: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.4 2.3 1.9 3.9 4.4 4.1v3.2c-1.6.1-3-.4-4.4-1.3v6.2c0 3.6-2.7 6.1-6.1 6.1A6 6 0 0 1 4.4 15c0-3.6 3-6.3 6.8-5.9v3.3c-1.9-.4-3.5.8-3.5 2.6 0 1.5 1.2 2.7 2.8 2.7 1.7 0 2.8-1.2 2.8-3.1V3h3.3Z"/></svg>',
+      linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM3 9h3v12H3V9Zm6 0h2.9v1.7c.5-.9 1.7-2 3.6-2 3.2 0 4.5 2 4.5 5.4V21h-3v-6.2c0-1.7-.3-3.1-2.1-3.1-1.8 0-2.2 1.3-2.2 3V21H9V9Z"/></svg>',
+      whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.5 1.9 1 .9 1.9 1.2 2.2 1.3.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"/></svg>',
+    };
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const $ = (id) => document.getElementById(id);
+    const enc = encodeURIComponent;
+
+    // Header
+    $("sub").textContent = `${EVENT.dates} · ${EVENT.venue}`;
+    $("venue-line").textContent = EVENT.venue;
+    $("date-line").textContent = EVENT.dates;
+
+    // Feature tiles
+    $("tiles").innerHTML = FEATURED.map((f) => `
+      <a class="tile ${f.cls}" href="${esc(f.url)}">
+        <span class="chip">${esc(f.chip)}</span>
+        <h3>${esc(f.title)}</h3>
+        <p>${esc(f.note)}</p>
+        <img src="${esc(f.img)}" alt="" loading="eager">
+        <span class="go" aria-hidden="true">${ICONS.arrow}</span>
+      </a>`).join("");
+
+    // Reels
+    $("reels-all").href = INSTAGRAM;
+    $("reels").innerHTML = REELS.map((r) => `
+      <a class="reel" href="${esc(r.url || INSTAGRAM)}" target="_blank" rel="noopener" aria-label="${esc(r.title)} on Instagram">
+        <video src="${esc(r.video)}" poster="${esc(r.poster)}" muted loop playsinline preload="none"></video>
+        <span class="badge">${ICONS.instagram}</span>
+      </a>`).join("") + `
+      <a class="reel more" href="${esc(INSTAGRAM)}" target="_blank" rel="noopener">
+        <div><span class="ico ig bg-ig" style="display:grid;place-items:center">${ICONS.instagram.replace("<svg", '<svg width="26" height="26"')}</span>
+        <b>More on Instagram</b><span>@activatemefest</span></div>
+      </a>`;
+    // Play reels only while they're on screen
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+      const v = e.target;
+      if (e.isIntersecting) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause();
+    }), { threshold: .6 });
+    document.querySelectorAll(".reel video").forEach((v) => io.observe(v));
+
+    // Social rows
+    $("social").innerHTML = SOCIAL.map((s) => `
+      <a class="row" href="${esc(s.url)}" target="_blank" rel="noopener">
+        <span class="ico ${s.bg}">${ICONS[s.icon]}</span>
+        <span class="txt"><b>${esc(s.title)}</b><small>${esc(s.note)}</small></span>
+        ${ICONS.chev}
+      </a>`).join("");
+
+    // Fill icon placeholders
+    document.querySelectorAll("[data-icon]").forEach((el) => {
+      if (el.dataset.icon === "chev") el.outerHTML = ICONS.chev; else el.innerHTML = ICONS[el.dataset.icon];
+    });
+
+    // Sheets
+    document.querySelectorAll("[data-sheet]").forEach((b) => b.addEventListener("click", () => $(b.dataset.sheet).showModal()));
+    document.querySelectorAll("dialog.sheet").forEach((d) => d.addEventListener("click", (e) => { if (e.target === d) d.close(); }));
+
+    // Maps
+    $("maps-title").textContent = EVENT.venue;
+    $("maps-hint").textContent = `${EVENT.dates} · Open directions in`;
+    $("google-maps").href = EVENT.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${enc(EVENT.coords || EVENT.venue + ", Dubai")}`;
+    $("apple-maps").href = EVENT.coords
+      ? `https://maps.apple.com/?ll=${enc(EVENT.coords)}&q=${enc(EVENT.venue)}`
+      : `https://maps.apple.com/?q=${enc(EVENT.venue + ", Dubai")}`;
+
+    // Calendar
+    $("cal-hint").textContent = `ActivateMe™ Fest · ${EVENT.dates}`;
+    $("gcal-link").href = "https://calendar.google.com/calendar/render?action=TEMPLATE"
+      + `&text=${enc("ActivateMe™ Fest")}&dates=${EVENT.calStart}/${EVENT.calEnd}`
+      + `&location=${enc(EVENT.venue + ", Dubai")}`
+      + `&details=${enc("Family festival with 100+ activities. Try the Become Acti filter: https://becomeacti.pages.dev")}`;
+
+    // Stickers
+    function showPack(pack) {
+      document.querySelectorAll(".segmented button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.pack === pack));
+      $("sticker-grid").innerHTML = STICKERS[pack].map((n) => {
+        const src = `stickers/${pack}/${n}.webp`;
+        return `<a href="${src}" download="acti-${n.replace(/^\d+_/, "")}.webp"><img src="${src}" alt="${esc(n.replace(/^\d+_/, "").replace(/_/g, " "))}" loading="lazy"></a>`;
+      }).join("");
+    }
+    document.querySelectorAll(".segmented button").forEach((b) => b.addEventListener("click", () => showPack(b.dataset.pack)));
+    showPack("acti");
+    const wa = $("wa-add");
+    if (WHATSAPP_STICKERS_URL) {
+      wa.href = WHATSAPP_STICKERS_URL;
+      wa.innerHTML = `${ICONS.whatsapp} Add to WhatsApp`;
+      $("stickers-hint").textContent = "Tap below to add both packs to WhatsApp.";
+    } else {
+      wa.classList.add("off");
+      wa.textContent = "WhatsApp pack coming soon";
+      $("stickers-hint").textContent = "Tap a sticker to save it, then send it in any chat.";
+    }
+
+    // Countdown
+    const START = new Date(EVENT.start);
     const pad = (n) => String(n).padStart(2, "0");
     function tick() {
-      const ms = Math.max(0, EVENT_START - Date.now());
-      const d = Math.floor(ms / 864e5);
-      const h = Math.floor((ms % 864e5) / 36e5);
-      const m = Math.floor((ms % 36e5) / 6e4);
-      document.getElementById("cd-d").textContent = d;
-      document.getElementById("cd-h").textContent = pad(h);
-      document.getElementById("cd-m").textContent = pad(m);
+      const ms = Math.max(0, START - Date.now());
+      $("cd-d").textContent = Math.floor(ms / 864e5);
+      $("cd-h").textContent = pad(Math.floor((ms % 864e5) / 36e5));
+      $("cd-m").textContent = pad(Math.floor((ms % 36e5) / 6e4));
     }
     tick();
     setInterval(tick, 30000);
