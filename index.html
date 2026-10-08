@@ -84,6 +84,18 @@
     .countdown span { font-size: 13px; color: var(--text-2); margin-right: 10px; }
     .countdown span:last-child { margin-right: 0; }
 
+    .follow { margin-top: 22px; }
+    .follow p { margin: 0 0 10px; font-size: 13px; font-weight: 500; color: var(--text-2); }
+    .social { display: flex; justify-content: center; gap: 14px; }
+    .social a {
+      width: 50px; height: 50px; border-radius: 14px;
+      display: grid; place-items: center; color: #fff;
+      box-shadow: 0 8px 20px -8px rgba(0, 0, 0, .6), inset 0 0 0 .5px rgba(255, 255, 255, .2);
+      transition: transform .3s var(--ease);
+    }
+    .social a:active { transform: scale(.92); }
+    .social svg { width: 26px; height: 26px; }
+
     /* ---------- Section titles ---------- */
     .section-title {
       display: flex; justify-content: space-between; align-items: baseline;
@@ -281,6 +293,10 @@
         <b id="cd-h">--</b><span>hrs</span>
         <b id="cd-m">--</b><span>min</span>
       </div>
+      <div class="follow">
+        <p>Follow us</p>
+        <div class="social" id="social"></div>
+      </div>
     </header>
 
     <div class="tiles" id="tiles"></div>
@@ -307,8 +323,6 @@
       </button>
     </div>
 
-    <div class="section-title"><span>Follow us</span></div>
-    <div class="group" id="social"></div>
 
     <footer>© ActivateMe™ Fest · MWAN Events</footer>
   </main>
@@ -375,14 +389,14 @@
     // Put each reel's Instagram link in `url` (open the reel → Share → Copy link).
     const INSTAGRAM = "https://www.instagram.com/activatemefest/";
     const REELS = [
-      { title: "Become Acti in 15 seconds", video: "reels/become-acti.mp4", poster: "reels/become-acti.jpg", url: "" },
-      { title: "Put on Acti's cap", video: "reels/launch.mp4", poster: "reels/launch.jpg", url: "" },
+      { title: "What should my kid try? Quiz launch", video: "reels/quiz-launch.mp4", poster: "reels/quiz-launch.jpg", url: "" },
+      { title: "Become Acti AR filter launch", video: "reels/launch.mp4", poster: "reels/launch.jpg", url: "" },
     ];
 
     const SOCIAL = [
-      { icon: "instagram", bg: "bg-ig", title: "Instagram", note: "@activatemefest", url: INSTAGRAM },
-      { icon: "tiktok", bg: "bg-tt", title: "TikTok", note: "@activatemefest", url: "https://www.tiktok.com/@activatemefest" },
-      { icon: "linkedin", bg: "bg-li", title: "LinkedIn", note: "ActivateMe Fest", url: "https://www.linkedin.com/company/activateme-fest/" },
+      { icon: "instagram", bg: "bg-ig", title: "Instagram", url: INSTAGRAM },
+      { icon: "tiktok", bg: "bg-tt", title: "TikTok", url: "https://www.tiktok.com/@activatemefest" },
+      { icon: "linkedin", bg: "bg-li", title: "LinkedIn", url: "https://www.linkedin.com/company/activateme-fest/" },
     ];
 
     // Sticker.ly links for each pack. The green "Add to WhatsApp" button opens the pack
@@ -447,13 +461,9 @@
     }), { threshold: .6 });
     document.querySelectorAll(".reel video").forEach((v) => io.observe(v));
 
-    // Social rows
+    // Social icons
     $("social").innerHTML = SOCIAL.map((s) => `
-      <a class="row" href="${esc(s.url)}" target="_blank" rel="noopener">
-        <span class="ico ${s.bg}">${ICONS[s.icon]}</span>
-        <span class="txt"><b>${esc(s.title)}</b><small>${esc(s.note)}</small></span>
-        ${ICONS.chev}
-      </a>`).join("");
+      <a class="${s.bg}" href="${esc(s.url)}" target="_blank" rel="noopener" aria-label="${esc(s.title)}">${ICONS[s.icon]}</a>`).join("");
 
     // Fill icon placeholders
     document.querySelectorAll("[data-icon]").forEach((el) => {
