@@ -7,7 +7,7 @@
   <title>ActivateMe™ Fest · Links</title>
   <meta name="description" content="Everything ActivateMe™ Fest in one place. 16–17 Jan 2027, Dubai Silicon Oasis.">
   <meta property="og:title" content="ActivateMe™ Fest · 16–17 Jan 2027">
-  <meta property="og:description" content="Try the Become Acti filter, get tickets, the app and more.">
+  <meta property="og:description" content="Try the Become Acti filter, take the quiz and find us.">
   <meta property="og:image" content="og.jpg">
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -82,6 +82,7 @@
     }
     .btn:active { transform: translateY(4px); box-shadow: 0 4px 0 rgba(27, 11, 70, .25); }
     .btn .ico { flex: none; width: 36px; font-size: 26px; text-align: center; }
+    .btn .ico svg { width: 28px; height: 28px; vertical-align: middle; color: var(--purple); }
     .btn .txt { flex: 1; }
     .btn small { display: block; font-size: 13px; font-weight: 700; color: #6b5fa8; }
     .btn .arrow { flex: none; font-size: 22px; color: var(--purple); }
@@ -151,14 +152,7 @@
       <video src="reel.mp4" poster="reel-poster.jpg" muted autoplay loop playsinline controls preload="metadata"></video>
     </section>
 
-    <div class="social">
-      <a href="https://www.instagram.com/activatemefest/" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-      </a>
-      <a href="https://www.activatemefest.com/" aria-label="Website">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg>
-      </a>
-    </div>
+    <div class="social" id="social"></div>
     <footer>© ActivateMe™ Fest · MWAN Events</footer>
   </main>
 
@@ -167,15 +161,20 @@
     // Leave url empty ("") to show the button as "Coming soon".
     const LINKS = [
       { featured: true, icon: "🧢", title: "Become Acti", note: "Try our free AR filter", tag: "NEW", url: "https://becomeacti.pages.dev/" },
-      { icon: "🎟️", title: "Get tickets", note: "16–17 Jan 2027", url: "" },
-      { apps: true, ios: "", android: "" },
-      { icon: "💬", title: "Acti WhatsApp stickers", note: "Free sticker packs", url: "" },
-      { icon: "📅", title: "Add to my calendar", note: "Never miss it", url: "activatemefest-2027.ics" },
-      { icon: "📍", title: "How to get there", note: "Dubai Silicon Oasis", url: "https://maps.google.com/?q=Dubai+Silicon+Oasis" },
-      { icon: "🌐", title: "Visit our website", note: "activatemefest.com", url: "https://www.activatemefest.com/" },
+      { icon: "🧠", title: "Take the quiz", note: "Which Acti are you?", url: "" },
+      { icon: "📍", title: "Find us", note: "Dubai Silicon Oasis", url: "https://maps.google.com/?q=Dubai+Silicon+Oasis" },
+      { icon: "instagram", title: "Instagram", note: "@activatemefest", url: "https://www.instagram.com/activatemefest/" },
+      { icon: "tiktok", title: "TikTok", note: "@activatemefest", url: "https://www.tiktok.com/@activatemefest" },
+      { icon: "linkedin", title: "LinkedIn", note: "ActivateMe Fest", url: "https://www.linkedin.com/company/activateme-fest/" },
     ];
     const EVENT_START = new Date("2027-01-16T10:00:00+04:00"); // Dubai time
     // ================================
+
+    const ICONS = {
+      instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>',
+      tiktok: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.4 2.3 1.9 3.9 4.4 4.1v3.2c-1.6.1-3-.4-4.4-1.3v6.2c0 3.6-2.7 6.1-6.1 6.1A6 6 0 0 1 4.4 15c0-3.6 3-6.3 6.8-5.9v3.3c-1.9-.4-3.5.8-3.5 2.6 0 1.5 1.2 2.7 2.8 2.7 1.7 0 2.8-1.2 2.8-3.1V3h3.3Z"/></svg>',
+      linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM3 9h3v12H3V9Zm6 0h2.9v1.7c.5-.9 1.7-2 3.6-2 3.2 0 4.5 2 4.5 5.4V21h-3v-6.2c0-1.7-.3-3.1-2.1-3.1-1.8 0-2.2 1.3-2.2 3V21H9V9Z"/></svg>',
+    };
 
     const nav = document.getElementById("links");
     const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -184,10 +183,14 @@
       const note = soon ? "Coming soon" : l.note || "";
       const tag = l.tag ? `<span class="tag">${esc(l.tag)}</span>` : "";
       return `<a class="btn ${l.featured ? "featured" : ""} ${soon ? "soon" : ""} ${extra}" href="${esc(l.url || "#")}"${soon ? ' aria-disabled="true"' : ""}>
-        ${l.icon ? `<span class="ico" aria-hidden="true">${l.icon}</span>` : ""}
+        ${l.icon ? `<span class="ico" aria-hidden="true">${ICONS[l.icon] || l.icon}</span>` : ""}
         <span class="txt">${esc(l.title)}${tag}<small>${esc(note)}</small></span>
         <span class="arrow" aria-hidden="true">›</span></a>`;
     };
+    document.getElementById("social").innerHTML = LINKS
+      .filter((l) => ICONS[l.icon] && l.url)
+      .map((l) => `<a href="${esc(l.url)}" aria-label="${esc(l.title)}">${ICONS[l.icon]}</a>`)
+      .join("");
     nav.innerHTML = LINKS.map((l) => {
       if (!l.apps) return button(l);
       return `<div class="apps">
