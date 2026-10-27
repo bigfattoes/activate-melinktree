@@ -284,6 +284,62 @@
     .bg-tt { background: #000; box-shadow: inset 0 0 0 .5px rgba(255, 255, 255, .2); }
     .bg-li { background: #0a66c2; }
 
+    /* ---------- Partners ---------- */
+    .section-sub { margin: -4px 4px 14px; font-size: 15px; color: var(--text-2); }
+    .logo-tile {
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+      border-radius: 18px; background: #fff;
+      box-shadow: 0 10px 24px -14px rgba(0, 0, 0, .7);
+    }
+    .logo-tile img { display: block; width: auto; height: auto; max-width: 84%; max-height: 74%; }
+    .headline-partners { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .headline-partners figure { margin: 0; }
+    .headline-partners .logo-tile { height: 84px; }
+    figcaption { margin: 6px 4px 0; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .partner-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
+    .partner-grid figure { margin: 0; }
+    .partner-grid .logo-tile { height: 62px; border-radius: 14px; }
+    .soon-tile {
+      grid-column: span 2;
+      display: grid; place-items: center; height: 62px; border-radius: 14px;
+      border: 1.5px dashed rgba(255, 255, 255, .35); color: var(--text-2);
+      font-size: 15px; font-weight: 600;
+    }
+
+    .clubs {
+      position: relative; margin-top: 46px; padding: 18px 0 16px;
+      border-radius: var(--radius);
+      background: var(--card); border: .5px solid var(--hairline);
+    }
+    .clubs-head { padding: 0 16px; padding-right: 110px; }
+    .clubs-head b { display: block; font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
+    .clubs-head span { font-size: 14px; color: var(--text-2); }
+    .clubs-acti {
+      position: absolute; right: 8px; top: -44px; height: 128px;
+      filter: drop-shadow(0 10px 14px rgba(20, 0, 50, .45));
+    }
+    .marquee {
+      overflow: hidden; margin-top: 14px;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    }
+    .marquee + .marquee { margin-top: 10px; }
+    .track { display: flex; width: max-content; animation: marquee 48s linear infinite; }
+    .marquee.rev .track { animation-direction: reverse; animation-duration: 56s; }
+    .track .logo-tile { flex: none; width: 108px; height: 72px; margin-right: 10px; border-radius: 16px; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    .more {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin: 16px 16px 0; padding: 12px;
+      border-radius: 14px; border: 1.5px dashed rgba(255, 255, 255, .3);
+      font-size: 15px; font-weight: 600;
+    }
+    .more .dots span { display: inline-block; animation: blink 1.4s infinite; }
+    .more .dots span:nth-child(2) { animation-delay: .2s; }
+    .more .dots span:nth-child(3) { animation-delay: .4s; }
+    @keyframes blink { 0%, 60%, 100% { opacity: .2; } 30% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .marquee { overflow-x: auto; } }
+
     footer { margin-top: 36px; text-align: center; font-size: 13px; color: var(--text-3); }
 
     /* ---------- Bottom sheets ---------- */
@@ -406,6 +462,19 @@
     </div>
 
 
+    <div class="section-title"><span>Meet the family</span></div>
+    <p class="section-sub">The partners and clubs making ActivateMe happen.</p>
+    <div class="headline-partners" id="headline-partners"></div>
+    <div class="partner-grid" id="partner-grid"></div>
+
+    <section class="clubs">
+      <img class="clubs-acti" src="img/acti/thumbs.webp" alt="" loading="lazy">
+      <div class="clubs-head"><b id="clubs-count"></b><span>Meet them all at the fest</span></div>
+      <div class="marquee"><div class="track" id="clubs-a"></div></div>
+      <div class="marquee rev"><div class="track" id="clubs-b"></div></div>
+      <div class="more">More to come<span class="dots"><span>.</span><span>.</span><span>.</span></span> 👀</div>
+    </section>
+
     <footer>© ActivateMe™ Fest · MWAN Events</footer>
   </main>
 
@@ -494,6 +563,31 @@
     ];
     const RARE = ["yawn", "Shh… you woke me up! You found sleepy Acti 🌙"];
 
+    // Partners (logos in partners/). Add a partner by adding a line.
+    const HEADLINE_PARTNERS = [
+      { role: "Brought to you by", name: "MWAN Events", logo: "mwan" },
+      { role: "Supported by", name: "Dubai Sports", logo: "dubai-sports" },
+      { role: "Hosting partner", name: "Dubai Silicon Oasis", logo: "dso" },
+      { role: "Strategic partner", name: "Dubai Shopping Festival", logo: "dsf" },
+    ];
+    const PARTNERS = [
+      { role: "Partner", name: "Tesla", logo: "tesla" },
+      { role: "Partner", name: "Fakeeh University Hospital", logo: "fakeeh" },
+      { role: "Partner", name: "Dubai College of Tourism", logo: "dct" },
+      { role: "Partner", name: "Al Mayya K9", logo: "al-mayya-k9" },
+      { role: "Hospitality", name: "Radisson RED Dubai Silicon Oasis", logo: "radisson-red" },
+      { role: "Food & drinks", name: "Chocodate", logo: "chocodate" },
+      { role: "Food & drinks", name: "Snowie Time", logo: "snowie-time" },
+    ];
+    const CLUBS = [
+      ["club-01", "Diamond Academy"], ["club-02", "Drum Corps United"], ["club-03", "Etiquette for Everyone"], ["club-04", "Falcons Wings"],
+      ["club-05", "3D UAE"], ["club-06", "Urbanball FC"], ["club-07", "Archery Garden"], ["club-08", "Ascend EdTech"],
+      ["club-09", "Real Madrid Foundation Football Program Dubai"], ["club-10", "The Overlord Academy"], ["club-11", "Infinite Sports"], ["club-12", "Absolute Basketball"],
+      ["club-13", "Absolute Gymnastics"], ["club-14", "Absolute Swimming"], ["club-15", "IJF Academy"], ["club-16", "Infinite Camps"],
+      ["club-17", "MVP Sport Services"], ["club-18", "Hip Hop Cardio"], ["club-19", "Wolfi's Cycling Academy"], ["club-20", "icode jr"],
+      ["club-21", "British Dance Academy"], ["club-22", "Dubai Basketball"], ["club-23", "Habeati Studios"], ["club-24", "Skim UAE"],
+    ];
+
     // The two big tiles at the top
     const FEATURED = [
       { cls: "ar", chip: "AR filter", title: "Become Acti", note: "Try on Acti's cap", img: "img/vr.webp", url: "https://becomeacti.pages.dev/" },
@@ -576,6 +670,18 @@
       if (e.isIntersecting) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause();
     }), { threshold: .6 });
     document.querySelectorAll(".reel video").forEach((v) => io.observe(v));
+
+    // Partners
+    const logoTile = (logo, name) => `<div class="logo-tile"><img src="partners/${esc(logo)}.webp" alt="${esc(name)}" loading="lazy"></div>`;
+    const figure = (p) => `<figure>${logoTile(p.logo, p.name)}<figcaption>${esc(p.role)}</figcaption></figure>`;
+    $("headline-partners").innerHTML = HEADLINE_PARTNERS.map(figure).join("");
+    $("partner-grid").innerHTML = PARTNERS.map(figure).join("") + '<div class="soon-tile">More partners soon 👀</div>';
+    $("clubs-count").textContent = `${CLUBS.length} academies & clubs`;
+    const half = Math.ceil(CLUBS.length / 2);
+    [["clubs-a", CLUBS.slice(0, half)], ["clubs-b", CLUBS.slice(half)]].forEach(([id, list]) => {
+      const tiles = list.map(([logo, name]) => logoTile(logo, name)).join("");
+      $(id).innerHTML = tiles + tiles.replace(/alt="[^"]*"/g, 'alt="" aria-hidden="true"'); // doubled for a seamless loop
+    });
 
     // Social icons
     $("social").innerHTML = SOCIAL.map((s) => `

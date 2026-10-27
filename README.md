@@ -9,6 +9,7 @@ Everything you'd normally change is in the `EDIT THE PAGE HERE` block near the b
 | `TICKETS_URL` | The big "Get your tickets" card. |
 | `actiStage()` | Acti's pose and speech bubble as the festival gets closer (wave → point → run → jump → dance → thanks). |
 | `SURPRISES` / `RARE` | What Acti does when tapped. The rare sleepy Acti shows about 1 tap in 15. |
+| `HEADLINE_PARTNERS` / `PARTNERS` / `CLUBS` | The "Meet the family" section. Logos live in `partners/`. |
 | `EVENT.mapsUrl` | Google Maps pin for the exact venue (Share → Copy link). Empty = searches "Dubai Silicon Oasis". |
 | `EVENT.coords` | Optional `lat,lng` so Apple Maps drops the pin on the venue too. |
 | `FEATURED` | The two big tiles: Become Acti AR filter and the quiz. |
