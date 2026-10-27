@@ -284,60 +284,50 @@
     .bg-tt { background: #000; box-shadow: inset 0 0 0 .5px rgba(255, 255, 255, .2); }
     .bg-li { background: #0a66c2; }
 
-    /* ---------- Partners ---------- */
-    .section-sub { margin: -4px 4px 14px; font-size: 15px; color: var(--text-2); }
-    .logo-tile {
-      display: flex; align-items: center; justify-content: center; overflow: hidden;
-      border-radius: 18px; background: #fff;
-      box-shadow: 0 10px 24px -14px rgba(0, 0, 0, .7);
+    /* ---------- Partners: one white credits panel ---------- */
+    .family {
+      position: relative; margin-top: 54px; padding: 22px 0 18px;
+      border-radius: 28px; background: #fff; color: #1b0b46;
+      box-shadow: 0 30px 60px -30px rgba(107, 44, 255, .55);
     }
-    .logo-tile img { display: block; width: auto; height: auto; max-width: 84%; max-height: 74%; }
-    .headline-partners { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .headline-partners figure { margin: 0; }
-    .headline-partners .logo-tile { height: 84px; }
-    figcaption { margin: 6px 4px 0; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .partner-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
-    .partner-grid figure { margin: 0; }
-    .partner-grid .logo-tile { height: 62px; border-radius: 14px; }
-    .soon-tile {
-      grid-column: span 2;
-      display: grid; place-items: center; height: 62px; border-radius: 14px;
-      border: 1.5px dashed rgba(255, 255, 255, .35); color: var(--text-2);
-      font-size: 15px; font-weight: 600;
+    .family-acti {
+      position: absolute; right: 10px; top: -58px; height: 118px;
+      filter: drop-shadow(0 10px 14px rgba(20, 0, 50, .35));
     }
+    .family h2 { margin: 0 20px; font-size: 24px; font-weight: 700; letter-spacing: -.025em; }
+    .family .lede { margin: 2px 20px 0; font-size: 15px; color: #6e6987; padding-right: 96px; }
+    .family .label {
+      margin: 22px 20px 0; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #9a95b0;
+    }
+    /* logos sit on white, divided by hairlines */
+    .cells { display: grid; gap: 1px; margin: 10px 20px 0; background: #ebe8f2; border-radius: 2px; overflow: hidden; }
+    .cells.two { grid-template-columns: 1fr 1fr; }
+    .cells.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cell { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: #fff; padding: 14px 8px 12px; min-height: 86px; }
+    .cell img { display: block; width: auto; height: auto; max-width: 82%; max-height: 52px; }
+    .cells.three .cell { min-height: 68px; }
+    .cells.three .cell img { max-height: 40px; }
+    .cell small { font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #9a95b0; }
 
-    .clubs {
-      position: relative; margin-top: 46px; padding: 18px 0 16px;
-      border-radius: var(--radius);
-      background: var(--card); border: .5px solid var(--hairline);
-    }
-    .clubs-head { padding: 0 16px; padding-right: 110px; }
-    .clubs-head b { display: block; font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
-    .clubs-head span { font-size: 14px; color: var(--text-2); }
-    .clubs-acti {
-      position: absolute; right: 8px; top: -44px; height: 128px;
-      filter: drop-shadow(0 10px 14px rgba(20, 0, 50, .45));
-    }
     .marquee {
-      overflow: hidden; margin-top: 14px;
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
-      mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+      overflow: hidden; margin-top: 12px;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
     }
-    .marquee + .marquee { margin-top: 10px; }
-    .track { display: flex; width: max-content; animation: marquee 48s linear infinite; }
-    .marquee.rev .track { animation-direction: reverse; animation-duration: 56s; }
-    .track .logo-tile { flex: none; width: 108px; height: 72px; margin-right: 10px; border-radius: 16px; }
+    .marquee + .marquee { margin-top: 14px; }
+    .track { display: flex; align-items: center; width: max-content; animation: marquee 50s linear infinite; }
+    .marquee.rev .track { animation-direction: reverse; animation-duration: 58s; }
+    .track img { flex: none; display: block; height: 50px; width: auto; max-width: 112px; object-fit: contain; margin-right: 30px; }
     @keyframes marquee { to { transform: translateX(-50%); } }
     .more {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      margin: 16px 16px 0; padding: 12px;
-      border-radius: 14px; border: 1.5px dashed rgba(255, 255, 255, .3);
-      font-size: 15px; font-weight: 600;
+      display: table; margin: 22px auto 0; padding: 9px 18px;
+      border-radius: 99px; background: linear-gradient(115deg, #6b2cff, #c21ad0 55%, #f83840); color: #fff;
+      font-size: 14px; font-weight: 600;
     }
     .more .dots span { display: inline-block; animation: blink 1.4s infinite; }
     .more .dots span:nth-child(2) { animation-delay: .2s; }
     .more .dots span:nth-child(3) { animation-delay: .4s; }
-    @keyframes blink { 0%, 60%, 100% { opacity: .2; } 30% { opacity: 1; } }
+    @keyframes blink { 0%, 60%, 100% { opacity: .25; } 30% { opacity: 1; } }
     @media (prefers-reduced-motion: reduce) { .marquee { overflow-x: auto; } }
 
     footer { margin-top: 36px; text-align: center; font-size: 13px; color: var(--text-3); }
@@ -462,17 +452,19 @@
     </div>
 
 
-    <div class="section-title"><span>Meet the family</span></div>
-    <p class="section-sub">The partners and clubs making ActivateMe happen.</p>
-    <div class="headline-partners" id="headline-partners"></div>
-    <div class="partner-grid" id="partner-grid"></div>
-
-    <section class="clubs">
-      <img class="clubs-acti" src="img/acti/thumbs.webp" alt="" loading="lazy">
-      <div class="clubs-head"><b id="clubs-count"></b><span>Meet them all at the fest</span></div>
+    <section class="family" aria-labelledby="family-title">
+      <img class="family-acti" src="img/acti/thumbs.webp" alt="" loading="lazy">
+      <h2 id="family-title">Meet the family</h2>
+      <p class="lede">The partners and clubs making ActivateMe happen.</p>
+      <div class="cells two" id="headline-partners"></div>
+      <p class="label">Partners</p>
+      <div class="cells two" id="partners"></div>
+      <p class="label">Hotel &amp; food</p>
+      <div class="cells three" id="hospitality"></div>
+      <p class="label" id="clubs-count"></p>
       <div class="marquee"><div class="track" id="clubs-a"></div></div>
       <div class="marquee rev"><div class="track" id="clubs-b"></div></div>
-      <div class="more">More to come<span class="dots"><span>.</span><span>.</span><span>.</span></span> 👀</div>
+      <span class="more">More to come<span class="dots"><span>.</span><span>.</span><span>.</span></span> 👀</span>
     </section>
 
     <footer>© ActivateMe™ Fest · MWAN Events</footer>
@@ -575,7 +567,7 @@
       { role: "Partner", name: "Fakeeh University Hospital", logo: "fakeeh" },
       { role: "Partner", name: "Dubai College of Tourism", logo: "dct" },
       { role: "Partner", name: "Al Mayya K9", logo: "al-mayya-k9" },
-      { role: "Hospitality", name: "Radisson RED Dubai Silicon Oasis", logo: "radisson-red" },
+      { role: "Hotel", name: "Radisson RED Dubai Silicon Oasis", logo: "radisson-red" },
       { role: "Food & drinks", name: "Chocodate", logo: "chocodate" },
       { role: "Food & drinks", name: "Snowie Time", logo: "snowie-time" },
     ];
@@ -672,15 +664,16 @@
     document.querySelectorAll(".reel video").forEach((v) => io.observe(v));
 
     // Partners
-    const logoTile = (logo, name) => `<div class="logo-tile"><img src="partners/${esc(logo)}.webp" alt="${esc(name)}" loading="lazy"></div>`;
-    const figure = (p) => `<figure>${logoTile(p.logo, p.name)}<figcaption>${esc(p.role)}</figcaption></figure>`;
-    $("headline-partners").innerHTML = HEADLINE_PARTNERS.map(figure).join("");
-    $("partner-grid").innerHTML = PARTNERS.map(figure).join("") + '<div class="soon-tile">More partners soon 👀</div>';
+    const img = (logo, name) => `<img src="partners/${esc(logo)}.webp" alt="${esc(name)}" loading="lazy">`;
+    const cell = (p, caption) => `<div class="cell">${img(p.logo, p.name)}${caption ? `<small>${esc(caption)}</small>` : ""}</div>`;
+    $("headline-partners").innerHTML = HEADLINE_PARTNERS.map((p) => cell(p, p.role)).join("");
+    $("partners").innerHTML = PARTNERS.filter((p) => p.role === "Partner").map((p) => cell(p)).join("");
+    $("hospitality").innerHTML = PARTNERS.filter((p) => p.role !== "Partner").map((p) => cell(p)).join("");
     $("clubs-count").textContent = `${CLUBS.length} academies & clubs`;
     const half = Math.ceil(CLUBS.length / 2);
     [["clubs-a", CLUBS.slice(0, half)], ["clubs-b", CLUBS.slice(half)]].forEach(([id, list]) => {
-      const tiles = list.map(([logo, name]) => logoTile(logo, name)).join("");
-      $(id).innerHTML = tiles + tiles.replace(/alt="[^"]*"/g, 'alt="" aria-hidden="true"'); // doubled for a seamless loop
+      const row = list.map(([logo, name]) => img(logo, name)).join("");
+      $(id).innerHTML = row + row.replace(/alt="[^"]*"/g, 'alt="" aria-hidden="true"'); // doubled for a seamless loop
     });
 
     // Social icons
