@@ -835,6 +835,29 @@
     }
     tick();
     setInterval(tick, 30000);
+
+    // Click counts (see README, "Click counts"). Anonymous: which link was tapped, never who tapped it.
+    // The numbers are on the private /stats page.
+    const count = (what) => { try { navigator.sendBeacon("/api/hit", JSON.stringify({ what })); } catch (e) {} };
+    const COUNTED = {
+      "ticket-link": "tickets", "apple-maps": "maps-apple", "google-maps": "maps-google", "ics-link": "calendar-apple",
+      "gcal-link": "calendar-google", "wa-add": "whatsapp-stickers", "story-save": "story-save", "reels-all": "instagram-all",
+    };
+    const short = (t) => (t || "").replace(/[^\w .,&'!?-]/g, "").trim().slice(0, 40);
+    function countName(a) {
+      if (COUNTED[a.id]) return COUNTED[a.id];
+      if (a.classList.contains("tile")) return "tile:" + short(a.querySelector("h3")?.textContent);
+      if (a.classList.contains("reel")) return a.classList.contains("more") ? "instagram-more" : "reel:" + short((a.getAttribute("aria-label") || "").replace(/ on Instagram$/, ""));
+      if (a.closest("#social")) return "social:" + short(a.getAttribute("aria-label"));
+      if (a.closest("#sticker-grid")) return "sticker-save";
+      return "";
+    }
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest && e.target.closest("a");
+      const name = a && countName(a);
+      if (name) count(name);
+    }, true);
+    count("visit");
   </script>
 </body>
 </html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Link page numbers · ActivateMe Fest</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    :root { --purple:#6F23B0; --orange:#EE6A1A; --ink:#1d1d24; --muted:#6b6577; --line:#ECEAF0; --bg:#faf8fd; --card:#fff; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif; }
+    main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+    h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -.01em; }
+    h2 { font-size: 17px; margin: 28px 0 10px; }
+    p.sub { color: var(--muted); margin: 0 0 20px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; }
+    form { display: flex; gap: 8px; flex-wrap: wrap; }
+    input { flex: 1; min-width: 180px; font: inherit; padding: 11px 14px; border: 1px solid var(--line); border-radius: 12px; }
+    button { font: inherit; font-weight: 600; padding: 11px 18px; border: 0; border-radius: 12px; background: var(--purple); color: #fff; cursor: pointer; }
+    button.quiet { background: var(--line); color: var(--ink); }
+    .big { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+    .big .card b { display: block; font-size: 38px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+    .big .card span { color: var(--muted); font-size: 14px; }
+    .scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    th, td { text-align: left; padding: 9px 6px; border-top: 1px solid var(--line); }
+    th { border-top: 0; color: var(--muted); font-weight: 500; font-size: 14px; }
+    td.n, th.n { text-align: right; }
+    #msg { color: #b42318; margin: 10px 0 0; min-height: 1.5em; }
+    .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <div><h1>Link page numbers</h1><p class="sub">Visits and taps on the ActivateMe Fest link-in-bio page. Anonymous counts, Dubai time.</p></div>
+    <button class="quiet" id="out" hidden>Lock</button>
+  </div>
+
+  <div class="card" id="login">
+    <form id="form">
+      <input id="pw" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password">
+      <button type="submit">Show numbers</button>
+    </form>
+    <p id="msg" role="alert"></p>
+  </div>
+
+  <div id="numbers" hidden>
+    <div class="big">
+      <div class="card"><b id="n-visits">0</b><span>visits</span></div>
+      <div class="card"><b id="n-tickets">0</b><span>taps on Get your tickets</span></div>
+      <div class="card"><b id="n-rate">0%</b><span>of visits tapped tickets</span></div>
+    </div>
+    <p class="sub" id="since" style="margin-top:12px"></p>
+
+    <h2>Every link</h2>
+    <div class="card scroll"><table><thead><tr><th>Link</th><th class="n">Taps</th></tr></thead><tbody id="links"></tbody></table></div>
+
+    <h2>Day by day</h2>
+    <div class="card scroll"><table><thead><tr><th>Day</th><th class="n">Visits</th><th class="n">Ticket taps</th><th class="n">All taps</th></tr></thead><tbody id="days"></tbody></table></div>
+  </div>
+</main>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const NAMES = {
+    "tickets": "Get your tickets", "maps-apple": "Apple Maps", "maps-google": "Google Maps", "calendar-apple": "Apple Calendar",
+    "calendar-google": "Google Calendar", "whatsapp-stickers": "Add stickers to WhatsApp", "sticker-save": "Saved a sticker",
+    "story-save": "Saved the I'm going story card", "instagram-all": "Reels: See all", "instagram-more": "More on Instagram",
+  };
+  const label = (w) => NAMES[w] || w.replace(/^tile:/, "Tile: ").replace(/^reel:/, "Reel: ").replace(/^social:/, "Social: ");
+  const cell = (text, cls) => { const td = document.createElement("td"); td.textContent = text; if (cls) td.className = cls; return td; };
+  const row = (cells) => { const tr = document.createElement("tr"); cells.forEach((c) => tr.appendChild(c)); return tr; };
+  const num = (n) => Number(n || 0).toLocaleString("en");
+
+  async function load(pw) {
+    $("msg").textContent = "";
+    let res, data;
+    try {
+      res = await fetch("/api/stats", { headers: { authorization: "Bearer " + pw } });
+      data = await res.json();
+    } catch (e) { $("msg").textContent = "Couldn't reach the numbers. Try again in a moment."; return; }
+    if (!data.ok) { $("msg").textContent = data.error; try { sessionStorage.removeItem("stats-pw"); } catch (e) {} return; }
+    try { sessionStorage.setItem("stats-pw", pw); } catch (e) {}
+
+    const get = (w) => (data.totals.find((t) => t.what === w) || {}).n || 0;
+    const visits = get("visit"), tickets = get("tickets");
+    $("n-visits").textContent = num(visits);
+    $("n-tickets").textContent = num(tickets);
+    $("n-rate").textContent = visits ? Math.round((tickets / visits) * 100) + "%" : "0%";
+    const first = data.totals.map((t) => t.since).sort()[0];
+    $("since").textContent = first ? "Counting since " + first + "." : "Nothing counted yet. Open the link page once and refresh this one.";
+    $("links").replaceChildren(...data.totals.filter((t) => t.what !== "visit").map((t) => row([cell(label(t.what)), cell(num(t.n), "n")])));
+    $("days").replaceChildren(...data.days.map((d) => row([cell(d.day), cell(num(d.visits), "n"), cell(num(d.tickets), "n"), cell(num(d.taps), "n")])));
+    $("login").hidden = true; $("numbers").hidden = false; $("out").hidden = false;
+  }
+  $("form").addEventListener("submit", (e) => { e.preventDefault(); if ($("pw").value) load($("pw").value); });
+  $("out").addEventListener("click", () => { try { sessionStorage.removeItem("stats-pw"); } catch (e) {} location.reload(); });
+  try { const saved = sessionStorage.getItem("stats-pw"); if (saved) load(saved); } catch (e) {}
+</script>
+</body>
+</html>
